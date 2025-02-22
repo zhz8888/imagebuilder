@@ -27,15 +27,13 @@ jobs:
       - name: Checkout ImmortalWrt source tree
         uses: actions/checkout@v4
         with:
-          repository: "immortalwrt/immortalwrt"
+          repository: "zhz8888/immortalwrt"
           ref: ${{ github.event.inputs.branch }}
 
       - name: Generate target list
         id: list_targets
         run: |
-          for TARGET in $(perl ./scripts/dump-target-info.pl targets 2>/dev/null | awk '{ print $1 }'); do \
-            TARGET_LIST="${TARGET_LIST:+$TARGET_LIST,}\"${TARGET/\//-}\""; \
-          done
+          TARGET_LIST="\"mediatek-filogic\""
           JSON_LIST="{\"runner\": [\"ubuntu-latest\"],\"targets\":[$TARGET_LIST]}"
           echo "$JSON_LIST" | jq .
           echo "targets=$JSON_LIST" >> "$GITHUB_OUTPUT"
@@ -99,5 +97,5 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            immortalwrt/imagebuilder:${{ matrix.targets }}-${{ github.event.inputs.branch }}
-            immortalwrt/imagebuilder:${{ matrix.targets }}-${{ github.event.inputs.version }}
+            zhz1021/imagebuilder:${{ matrix.targets }}-${{ github.event.inputs.branch }}
+            zhz1021/imagebuilder:${{ matrix.targets }}-${{ github.event.inputs.version }}
